@@ -1,0 +1,21 @@
+body{
+  background-color: #e2e2e2;
+  margin: 40px auto;
+}
+
+.container {
+  text-align: center;
+}
+
+btn {
+  margin-top: 30px;
+}
+
+#line{
+  display: block;
+}
+
+.custom-file-label{
+  width:400px;
+  margin:0 auto;
+}
