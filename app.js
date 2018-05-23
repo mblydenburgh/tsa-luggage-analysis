@@ -25,26 +25,23 @@ app.controller("LineCtrl", function ($scope,$http) {
       /* Get worksheet */
       var worksheet = workbook.Sheets[first_sheet_name];
       var jsonData = XLSX.utils.sheet_to_json(worksheet,{raw:true});
-      //var headerNames = jsonData[0];
-      //console.log(headerNames);
       console.log('Parsing ' + jsonData.length + ' entries...');
+      // sample entry 
       console.log(jsonData[878]);
+      
+      var airportCodes = [];
       for(i = 0; i < jsonData.length; i++){
         var date = XLSX.SSF.parse_date_code(jsonData[i]["Incident Date"],{date1904:false});
-        var airport = jsonData[i]["Airport Code"];
-        console.log(airport);
-        //if(date.m)
-        //console.log(date.m);
+        var airport = String(jsonData[i]["Airport Code"]);
+        if (airportCodes.includes(airport) === false){
+          airportCodes.push(airport);
+        } else{
+          continue;
+        }
       };
+      // List of all airport codes
+      console.log(airportCodes.sort());
 
-      /*var date = XLSX.SSF.parse_date_code(headerNames,{date1904:false})
-      console.log(date);
-      console.log(date.m);
-      if(date.m == 1){
-        console.log("January");
-      };*/
-      //console.log(headerNames);
-      //console.log(XLSX.utils.sheet_to_json(worksheet,{raw:true}));
 
       /* Button 1 click displays line graph */
       $scope.graph1Ctrl = function(){
