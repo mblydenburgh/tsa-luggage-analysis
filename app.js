@@ -34,6 +34,9 @@ app.controller("LineCtrl", function ($scope,$http) {
       // Define variables for data
       var airlineNames = [];
       var airportCodes = [];
+      var claimTotal = 0;
+
+
 
       // Loop through all json data
       for(i = 0; i < jsonData.length; i++){
@@ -41,6 +44,12 @@ app.controller("LineCtrl", function ($scope,$http) {
         var date = XLSX.SSF.parse_date_code(jsonData[i]["Incident Date"],{date1904:false});
         var airport = String(jsonData[i]["Airport Code"]);
         var airline = String(jsonData[i]["Airline Name"]);
+        var claim = Number(jsonData[i]["Close Amount"]);
+        claim = claim || 0; // Convert "-" to 0 for summing and average
+        claimTotal += claim;
+
+        // console.log(claim);
+
 
         if (airlineNames.includes(airline) === false){
           airlineNames.push(airline);
@@ -60,6 +69,10 @@ app.controller("LineCtrl", function ($scope,$http) {
       // List of all airport codes & airline names for sanity check
       console.log(airportCodes.sort());
       console.log(airlineNames.sort());
+      console.log("Total Claim Amount: " + claimTotal);
+      // Avg. calculation includes "-" entries for claim amount
+      var claimAvg = claimTotal / jsonData.length;
+      console.log("Average Claim: " + claimAvg);
 
 
       /* Button 1 click displays line graph */
