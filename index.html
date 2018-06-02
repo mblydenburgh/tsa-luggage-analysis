@@ -31,12 +31,15 @@
         <select>
           <option ng-repeat = "x in names">{{x}}</option>
         </select>
+        <select>
+          <option ng-repeat = "y in ports">{{y}}</option>
+        </select>
 
         <div class="container" id="stats">
           <br>
           <span>Total Entries Parsed: {{totalEntries}}</span>
-          <span>, Total Value of Claims: ${{totalClaims}}</span>
-          <span>, Average Value of Claim: ${{avgClaim}}</span>
+          <span>, Total Value of Claims: {{totalClaims | currency}}</span>
+          <span>, Average Value of Claim: {{avgClaim | currency}}</span>
           <br>
         </div>
 
