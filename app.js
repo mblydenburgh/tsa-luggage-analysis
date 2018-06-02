@@ -36,6 +36,7 @@ app.controller("LineCtrl", function ($scope,$http) {
       var airlineNames = [];
       var airportCodes = [];
       var claimTotal = 0;
+      var airlineData = [];
 
 
 
@@ -43,22 +44,29 @@ app.controller("LineCtrl", function ($scope,$http) {
       for(i = 0; i < jsonData.length; i++){
 
         var date = XLSX.SSF.parse_date_code(jsonData[i]["Incident Date"],{date1904:false});
+        var month = date.m; // Returns 1,2,3,...,12
         var airport = String(jsonData[i]["Airport Code"]);
         var airline = String(jsonData[i]["Airline Name"]);
         var claim = Number(jsonData[i]["Close Amount"]);
         claim = claim || 0; // Convert "-" to 0 for summing and average
         claimTotal += claim;
 
-        // console.log(claim);
+        // Build airport data array of objects to keep track of each airline's individual claims
+        if(airlineData.includes(airline) == false){
+          airlineData.name = airline;
+          airlineData.claimTotal = claim;
+        } else{
+          continue;
+        }
 
-
+        // Build airline name array for dropdown box
         if (airlineNames.includes(airline) === false){
           airlineNames.push(airline);
         } else{
             continue;
         }
 
-
+        // Build airport code array for dropdown box
         if (airportCodes.includes(airport) === false){
           airportCodes.push(airport);
         } else{
@@ -67,16 +75,16 @@ app.controller("LineCtrl", function ($scope,$http) {
 
       }; // End loop through rows
 
-      // List of all airport codes & airline names for sanity check
+
+      // Organize ist of names and codes for dropdown menus
       airlineNames = airlineNames.sort();
       airportCodes = airportCodes.sort();
       $scope.names = airlineNames;
-      console.log(airportCodes);
-      console.log(airlineNames);
-      console.log("Total Claim Amount: " + claimTotal);
+      $scope.ports = airportCodes;
+
+      console.log(airlineData);
       // Avg. calculation includes "-" entries for claim amount
       var claimAvg = claimTotal / jsonData.length;
-      console.log("Average Claim: " + claimAvg);
       $scope.totalClaims = claimTotal.toFixed(2);
       $scope.avgClaim = claimAvg.toFixed(2);
 
@@ -131,5 +139,5 @@ app.controller("LineCtrl", function ($scope,$http) {
 
 
 
-
+    $scope.load = true;
 });
