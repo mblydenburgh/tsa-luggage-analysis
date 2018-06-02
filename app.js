@@ -25,6 +25,7 @@ app.controller("LineCtrl", function ($scope,$http) {
       /* Get worksheet */
       var worksheet = workbook.Sheets[first_sheet_name];
       var jsonData = XLSX.utils.sheet_to_json(worksheet,{raw:true});
+      $scope.totalEntries = jsonData.length;
 
       console.log('Parsing ' + jsonData.length + ' entries...');
 
@@ -67,12 +68,17 @@ app.controller("LineCtrl", function ($scope,$http) {
       }; // End loop through rows
 
       // List of all airport codes & airline names for sanity check
-      console.log(airportCodes.sort());
-      console.log(airlineNames.sort());
+      airlineNames = airlineNames.sort();
+      airportCodes = airportCodes.sort();
+      $scope.names = airlineNames;
+      console.log(airportCodes);
+      console.log(airlineNames);
       console.log("Total Claim Amount: " + claimTotal);
       // Avg. calculation includes "-" entries for claim amount
       var claimAvg = claimTotal / jsonData.length;
       console.log("Average Claim: " + claimAvg);
+      $scope.totalClaims = claimTotal.toFixed(2);
+      $scope.avgClaim = claimAvg.toFixed(2);
 
 
       /* Button 1 click displays line graph */
