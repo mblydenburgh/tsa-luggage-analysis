@@ -3,7 +3,66 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content<!DOCTYPE html>
+<html lang="en" ng-app="myApp">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <title>The TSA Claims Analysis 3000</title>
+
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
+  <link rel="stylesheet" href="app.css">
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/2.7.2/Chart.min.js"></script>
+  <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.9/angular.min.js"></script>
+  <script src="angular-chart.min.js"></script>
+  <script src="https://unpkg.com/xlsx/dist/xlsx.full.min.js"></script>
+  <script src="SheetJS-angular.js"></script>
+
+
+</head>
+<body>
+
+<div class="container" ng-cloak>
+  <!--AngularJS Controller-->
+  <div ng-controller="LineCtrl">
+      <h1>TSA Claims Analysis</h1>
+      <div class="custom-file">
+
+        <button class="btn" ng-click="graph1Ctrl()">Value Lost by Airline</button>
+        <button class="btn" ng-click="graph2Ctrl()">Claims by Airport</button>
+
+        <!-- Dropdown menu of airlineNames -->
+        <select>
+          <option ng-repeat = "x in names">{{x}}</option>
+        </select>
+
+        <div class="container" id="stats">
+          <br>
+          <span>Total Entries Parsed: {{totalEntries}}</span>
+          <span>, Total Value of Claims: ${{totalClaims}}</span>
+          <span>, Average Value of Claim: ${{avgClaim}}</span>
+          <br>
+        </div>
+
+        <!--Line Chart Value Lost per Airline-->
+        <canvas id="line" class="chart chart-line" chart-type="chart_type"  chart-data="data"
+      chart-labels="labels" chart-series="series" chart-options="options"
+      chart-dataset-override="datasetOverride" chart-click="onClick">
+      </canvas>
+      </div>
+
+
+
+  </div> <!-- End AngularJS Controller -->
+
+<script src="app.js"></script>
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js" integrity="sha384-smHYKdLADwkXOn1EmN1qk/HfnUcbVRZyYmZ4qpPea6sjB/pTJ0euyQp0Mk8ck+5T" crossorigin="anonymous"></script>
+</body>
+</html>
+="ie=edge">
   <title>The TSA Claims Analysis 3000</title>
 
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.1/css/bootstrap.min.css" integrity="sha384-WskhaSGFgHYWDcbwN70/dfYBj47jz9qbsMId/iRN3ewGhXQFZCSftd1LZCfmhktB" crossorigin="anonymous">
